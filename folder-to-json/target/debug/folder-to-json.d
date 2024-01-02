@@ -1,0 +1,1 @@
+/Volumes/D/facultate/An2/Semestrul\ 3/Rust/facultate/proiect/Proiect-Rust/folder-to-json/target/debug/folder-to-json: /Volumes/D/facultate/An2/Semestrul\ 3/Rust/facultate/proiect/Proiect-Rust/folder-to-json/src/main.rs
