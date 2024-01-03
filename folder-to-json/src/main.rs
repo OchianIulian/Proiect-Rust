@@ -82,11 +82,12 @@ fn main() {
     //Access the second argument (index 1) as folder path
     let folder_path = &args[1];
 
+    
     let path = Path::new(folder_path);
     if path.exists() {
         println!("Folder path: {}", folder_path);
     } else {
-        println!("Path-ul {:?} nu există sau nu este valid.", path);
+        eprintln!("Path-ul {:?} nu există sau nu este valid.", path);
         return;
     }
 
