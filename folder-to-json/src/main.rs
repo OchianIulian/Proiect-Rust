@@ -2,11 +2,16 @@ use std::env;
 // Importăm serărirea și deserializarea pentru JSON
 use serde::{Serialize, Deserialize};
 use serde_json;
-use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashMap;
 use std::fs;//folosit pentru a traversa folderele
 use std::path::Path;
+
+#[derive(Serialize, Deserialize)]
+struct FileInfo{
+    file_name: String,
+    file_size: u64
+}
 
 // Definim o structură de date pe care dorim să o serializăm în JSON
 #[derive(Serialize, Deserialize)]
@@ -14,9 +19,14 @@ struct FolderInfo{
     file_count: u32,
     folder_count: u32,
     extension_counts: HashMap<String, u32>,
+    files_info: Vec<FileInfo>
 }
 
-fn count_files_and_folders(path: &Path, file_count: &mut u32, folder_count: &mut u32, extension_count: &mut HashMap<String, u32>){
+fn count_files_and_folders(path: &Path
+    , file_count: &mut u32
+    , folder_count: &mut u32
+    , extension_count: &mut HashMap<String, u32>
+    , files_info: &mut Vec<FileInfo>){
     if let Ok(entries) = fs::read_dir(path){
         for entry in entries {
             if let Ok(entry) = entry {
@@ -31,12 +41,21 @@ fn count_files_and_folders(path: &Path, file_count: &mut u32, folder_count: &mut
                         let count = extension_count.entry(ext_str.into()).or_insert(0);
                         *count += 1;
                     }
+
+                    //obtinem informatii despre fisier nume si marime
+                    if let Ok(metadata) = fs::metadata(&sub_path){
+                        let file_info = FileInfo {
+                            file_name: sub_path.file_name().unwrap().to_string_lossy().to_string(),
+                            file_size: metadata.len()
+                        };
+                        files_info.push(file_info);
+                    }
                 } else if sub_path.is_dir() {
                     //incrementam numarul de foldere
                     *folder_count += 1;
 
                     //apelam recursiv functia pe path ul subfolderelor
-                    count_files_and_folders(&sub_path, file_count, folder_count, extension_count);
+                    count_files_and_folders(&sub_path, file_count, folder_count, extension_count, files_info);
                 }
             }
         }
@@ -62,14 +81,16 @@ fn main() {
     let mut file_count = 0;
     let mut folder_count = 0;
     let mut extension_counts: HashMap<String, u32> = HashMap::new();
+    let mut files_info :Vec<FileInfo>= Vec::new();
 
-    count_files_and_folders(Path::new(&folder_path), &mut file_count, &mut folder_count, &mut extension_counts);
+    count_files_and_folders(Path::new(&folder_path), &mut file_count, &mut folder_count, &mut extension_counts, &mut files_info);
 
     //cream structura de date care va fi serializata in JSON
     let folder_info = FolderInfo {
         file_count,
         folder_count,
-        extension_counts
+        extension_counts,
+        files_info
     };
 
     //serializam structura in format JSON
