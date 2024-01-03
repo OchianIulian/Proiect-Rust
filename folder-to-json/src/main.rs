@@ -78,6 +78,12 @@ fn main() {
     let folder_path = &args[1];
     println!("Folder path: {}", folder_path);
 
+    let path = Path::new(folder_path);
+    if !path.exists() {
+        println!("Path-ul {:?} nu există sau nu este valid.", path);
+        return;
+    }
+
     let mut file_count = 0;
     let mut folder_count = 0;
     let mut extension_counts: HashMap<String, u32> = HashMap::new();
