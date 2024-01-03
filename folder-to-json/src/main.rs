@@ -4,13 +4,43 @@ use serde::{Serialize, Deserialize};
 use serde_json;
 use std::fs::File;
 use std::io::prelude::*;
+use std::collections::HashMap;
+use std::fs;//folosit pentru a traversa folderele
+use std::path::Path;
 
 // Definim o structură de date pe care dorim să o serializăm în JSON
 #[derive(Serialize, Deserialize)]
-struct Persoana{
-    nume: String,
-    varsta: u32,
-    activ: bool
+struct FolderInfo{
+    file_count: u32,
+    folder_count: u32,
+    extension_counts: HashMap<String, u32>,
+}
+
+fn count_files_and_folders(path: &Path, file_count: &mut u32, folder_count: &mut u32, extension_count: &mut HashMap<String, u32>){
+    if let Ok(entries) = fs::read_dir(path){
+        for entry in entries {
+            if let Ok(entry) = entry {
+                let sub_path = entry.path();
+                if sub_path.is_file(){
+                    //incrementam numarul de fisiere
+                    *file_count+=1;
+
+                    //colectam informatii despre extensii
+                    if let Some(ext) = sub_path.extension() {
+                        let ext_str = ext.to_string_lossy().to_lowercase();
+                        let count = extension_count.entry(ext_str.into()).or_insert(0);
+                        *count += 1;
+                    }
+                } else if sub_path.is_dir() {
+                    //incrementam numarul de foldere
+                    *folder_count += 1;
+
+                    //apelam recursiv functia pe path ul subfolderelor
+                    count_files_and_folders(&sub_path, file_count, folder_count, extension_count);
+                }
+            }
+        }
+    }   
 }
 
 fn main() {
@@ -29,21 +59,25 @@ fn main() {
     let folder_path = &args[1];
     println!("Folder path: {}", folder_path);
 
-    let persoana  = Persoana{
-        nume:String::from("Alex"),
-        varsta:24,
-        activ: false
+    let mut file_count = 0;
+    let mut folder_count = 0;
+    let mut extension_counts: HashMap<String, u32> = HashMap::new();
+
+    count_files_and_folders(Path::new(&folder_path), &mut file_count, &mut folder_count, &mut extension_counts);
+
+    //cream structura de date care va fi serializata in JSON
+    let folder_info = FolderInfo {
+        file_count,
+        folder_count,
+        extension_counts
     };
 
-    //Serializam structura in format JSON
-    let json_generat = serde_json::to_string(&persoana).unwrap();
+    //serializam structura in format JSON
+    let json_data = serde_json::to_string_pretty(&folder_info).unwrap();
 
-    //adaugam datele in fisier
-    let mut file = File::create("persoana.json").expect("Nu s-a putut crea fisierul");
-    file.write_all(json_generat.as_bytes()).expect("Nu s-a putut scrie in fisier");
+    //scriem JSON ul intr un fisier
+    let mut file = fs::File::create("folder_info.json").expect("Nu s-a putut crea fisierul");
+    file.write_all(json_data.as_bytes()).expect("Nu s-a putut scrie in fisier");
 
-    println!("JSON generat și scris în fișierul persoana.json.");
-    // Afisăm JSON-ul generat
-    println!("JSON generat: {}", json_generat);
-
+    println!("Informațiile colectate au fost scrise în fișierul folder_info.json.");
 }  
