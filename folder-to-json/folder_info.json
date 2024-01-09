@@ -1,143 +1,100 @@
 {
-  "file_count": 32,
-  "folder_count": 33,
+  "file_count": 10,
+  "folder_count": 3,
   "extension_counts": {
-    "md": 1,
-    "class": 11,
-    "properties": 2,
-    "xml": 1,
-    "cmd": 1,
-    "iml": 1,
-    "java": 11
+    "a": 1,
+    "in": 1,
+    "s": 3,
+    "txt": 2,
+    "f": 1,
+    "g": 2
   },
-  "files_info": [
-    {
-      "file_name": ".DS_Store",
-      "file_size": 6148
-    },
-    {
-      "file_name": "mvnw.cmd",
-      "file_size": 6734
-    },
-    {
-      "file_name": "UserRepositoryTests.class",
-      "file_size": 2407
-    },
-    {
-      "file_name": "PlannerApplicationTests.class",
-      "file_size": 530
-    },
-    {
-      "file_name": "SecurityConfig.class",
-      "file_size": 1967
-    },
-    {
-      "file_name": "PlannerApplication.class",
-      "file_size": 849
-    },
-    {
-      "file_name": "UserRepository.class",
-      "file_size": 420
-    },
-    {
-      "file_name": "TeacherRepository.class",
-      "file_size": 423
-    },
-    {
-      "file_name": "UserType.class",
-      "file_size": 1115
-    },
-    {
-      "file_name": "Teacher.class",
-      "file_size": 2499
-    },
-    {
-      "file_name": "User.class",
-      "file_size": 4260
-    },
-    {
-      "file_name": "CheckService.class",
-      "file_size": 1461
-    },
-    {
-      "file_name": "CheckController.class",
-      "file_size": 848
-    },
-    {
-      "file_name": "application.properties",
-      "file_size": 287
-    },
-    {
-      "file_name": "pom.xml",
-      "file_size": 2391
-    },
-    {
-      "file_name": "HELP.md",
-      "file_size": 1124
-    },
-    {
-      "file_name": ".gitignore",
-      "file_size": 15
-    },
-    {
-      "file_name": "mvnw",
-      "file_size": 10284
-    },
-    {
-      "file_name": "plannermeditatii.iml",
-      "file_size": 12092
-    },
-    {
-      "file_name": ".DS_Store",
-      "file_size": 6148
-    },
-    {
-      "file_name": "PlannerApplicationTests.java",
-      "file_size": 204
-    },
-    {
-      "file_name": "UserRepositoryTests.java",
-      "file_size": 1281
-    },
-    {
-      "file_name": "application.properties",
-      "file_size": 287
-    },
-    {
-      "file_name": "SecurityConfig.java",
-      "file_size": 701
-    },
-    {
-      "file_name": "UserRepository.java",
-      "file_size": 321
-    },
-    {
-      "file_name": "TeacherRepository.java",
-      "file_size": 269
-    },
-    {
-      "file_name": "User.java",
-      "file_size": 1683
-    },
-    {
-      "file_name": "Teacher.java",
-      "file_size": 2021
-    },
-    {
-      "file_name": "UserType.java",
-      "file_size": 79
-    },
-    {
-      "file_name": "PlannerApplication.java",
-      "file_size": 447
-    },
-    {
-      "file_name": "CheckService.java",
-      "file_size": 718
-    },
-    {
-      "file_name": "CheckController.java",
-      "file_size": 596
-    }
-  ]
+  "file_info": {
+    "name": "test2",
+    "is_file": false,
+    "size": 11,
+    "children": [
+      {
+        "name": "agg.txt",
+        "is_file": true,
+        "size": 11,
+        "children": null
+      },
+      {
+        "name": "asd.txt",
+        "is_file": true,
+        "size": 0,
+        "children": null
+      },
+      {
+        "name": "fds.in",
+        "is_file": true,
+        "size": 0,
+        "children": null
+      },
+      {
+        "name": "subfolder1",
+        "is_file": false,
+        "size": 0,
+        "children": [
+          {
+            "name": "alfj.f",
+            "is_file": true,
+            "size": 0,
+            "children": null
+          },
+          {
+            "name": "ggg.g",
+            "is_file": true,
+            "size": 0,
+            "children": null
+          },
+          {
+            "name": "sdasf.s",
+            "is_file": true,
+            "size": 0,
+            "children": null
+          },
+          {
+            "name": "subfolder2",
+            "is_file": false,
+            "size": 0,
+            "children": [
+              {
+                "name": "afsdfsd.s",
+                "is_file": true,
+                "size": 0,
+                "children": null
+              },
+              {
+                "name": "gfdasd.s",
+                "is_file": true,
+                "size": 0,
+                "children": null
+              }
+            ]
+          },
+          {
+            "name": "subfolder3",
+            "is_file": false,
+            "size": 0,
+            "children": [
+              {
+                "name": "sdfsdg.a",
+                "is_file": true,
+                "size": 0,
+                "children": null
+              },
+              {
+                "name": "sdgfg.g",
+                "is_file": true,
+                "size": 0,
+                "children": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
