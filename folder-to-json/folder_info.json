@@ -2,17 +2,17 @@
   "file_count": 10,
   "folder_count": 3,
   "extension_counts": {
-    "a": 1,
-    "in": 1,
     "s": 3,
+    "in": 1,
     "txt": 2,
+    "a": 1,
     "f": 1,
     "g": 2
   },
   "file_info": {
     "name": "test2",
     "is_file": false,
-    "size": 11,
+    "size": 24,
     "children": [
       {
         "name": "agg.txt",
@@ -23,7 +23,7 @@
       {
         "name": "asd.txt",
         "is_file": true,
-        "size": 0,
+        "size": 13,
         "children": null
       },
       {
