@@ -1,97 +1,55 @@
 {
-  "file_count": 10,
-  "folder_count": 3,
+  "file_count": 6,
+  "folder_count": 1,
   "extension_counts": {
-    "s": 3,
-    "in": 1,
-    "txt": 2,
-    "a": 1,
-    "f": 1,
-    "g": 2
+    "jpeg": 5,
+    "zip": 1
   },
   "file_info": {
-    "name": "test2",
+    "name": "Poze1",
     "is_file": false,
-    "size": 24,
+    "size": 5936562786,
     "children": [
       {
-        "name": "agg.txt",
+        "name": "balet.zip",
         "is_file": true,
-        "size": 11,
+        "size": 5930751129,
         "children": null
       },
       {
-        "name": "asd.txt",
+        "name": "poza.jpeg",
         "is_file": true,
-        "size": 13,
+        "size": 1499073,
         "children": null
       },
       {
-        "name": "fds.in",
+        "name": "unnamed2.jpeg",
         "is_file": true,
-        "size": 0,
+        "size": 912167,
         "children": null
       },
       {
-        "name": "subfolder1",
+        "name": "unnamed3.jpeg",
+        "is_file": true,
+        "size": 981682,
+        "children": null
+      },
+      {
+        "name": "untitled folder",
         "is_file": false,
-        "size": 0,
+        "size": 2418735,
         "children": [
           {
-            "name": "alfj.f",
+            "name": "unnamed.jpeg",
             "is_file": true,
-            "size": 0,
+            "size": 1233559,
             "children": null
           },
           {
-            "name": "ggg.g",
+            "name": "unnamed1.jpeg",
             "is_file": true,
-            "size": 0,
+            "size": 1185176,
             "children": null
-          },
-          {
-            "name": "sdasf.s",
-            "is_file": true,
-            "size": 0,
-            "children": null
-          },
-          {
-            "name": "subfolder2",
-            "is_file": false,
-            "size": 0,
-            "children": [
-              {
-                "name": "afsdfsd.s",
-                "is_file": true,
-                "size": 0,
-                "children": null
-              },
-              {
-                "name": "gfdasd.s",
-                "is_file": true,
-                "size": 0,
-                "children": null
-              }
-            ]
-          },
-          {
-            "name": "subfolder3",
-            "is_file": false,
-            "size": 0,
-            "children": [
-              {
-                "name": "sdfsdg.a",
-                "is_file": true,
-                "size": 0,
-                "children": null
-              },
-              {
-                "name": "sdgfg.g",
-                "is_file": true,
-                "size": 0,
-                "children": null
-              }
-            ]
           }
         ]
       }

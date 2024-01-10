@@ -4,46 +4,51 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::{self}; //folosit pentru a traversa folderele
 use std::io::Write;
-use std::path::{Path};
+use std::path::Path;
 
 /// Represents information about a file or folder, including its name, type (file or directory), size and if it is a folder, it's children
 #[derive(Serialize, Deserialize)]
-struct FileInfo{
+struct FileInfo {
     name: String,
-    is_file:bool,
+    is_file: bool,
     size: Option<u64>,
-    children: Option<Vec<FileInfo>>
+    children: Option<Vec<FileInfo>>,
 }
 
-
-/// Data structure that will be Serialized into a json including: number of files and folders, extension_counts and files and folders information 
+/// Data structure that will be Serialized into a json including: number of files and folders, extension_counts and files and folders information
 #[derive(Serialize, Deserialize)]
 struct FolderInfo {
     file_count: u32,
     folder_count: u32,
     extension_counts: HashMap<String, u32>,
-    file_info: FileInfo
+    file_info: FileInfo,
 }
 
 ///gets files and folders information: name and size
-fn get_file_info(path: &Path) -> Option<FileInfo>{
-    if let Ok(metadata) = fs::metadata(path){
-        let name = path.file_name()?.to_string_lossy().to_string();//to_string_lossu transforma in Cow<str> si nu in string direct
+fn get_file_info(path: &Path) -> Option<FileInfo> {
+    if let Ok(metadata) = fs::metadata(path) {
+        let name = path.file_name()?.to_string_lossy().to_string(); //to_string_lossu transforma in Cow<str> si nu in string direct
         let is_file = metadata.is_file();
-        let mut size = if is_file { Some(metadata.len())} else {None};
+        let mut size = if is_file { Some(metadata.len()) } else { None };
         let mut children = None;
-    
-        if metadata.is_dir(){
+
+        if metadata.is_dir() {
             if let Ok(entries) = fs::read_dir(path) {
                 let mut child_info = Vec::new();
                 let mut folder_size = 0;
 
-                for entry in entries.flatten() {//se parcurge fiecare fisier din directorul specificat
-                    if let Some(child) = get_file_info(&entry.path()){//se apeleaza recursiv functia pentru a parcurge toate subdirectoarele
-                        if let Some(child_size) = child.size {
-                            folder_size += child_size;
+                for entry in entries.flatten() {
+                    if let Some(file_name) = entry.file_name().to_str() {
+                        if !file_name.starts_with('.') {//se verifica daca fisierul/folderul e ascuns sau nu
+                            //se parcurge fiecare fisier din directorul specificat
+                            if let Some(child) = get_file_info(&entry.path()) {
+                                //se apeleaza recursiv functia pentru a parcurge toate subdirectoarele
+                                if let Some(child_size) = child.size {
+                                    folder_size += child_size;
+                                }
+                                child_info.push(child);
+                            }
                         }
-                        child_info.push(child);
                     }
                 }
                 children = Some(child_info);
@@ -51,11 +56,11 @@ fn get_file_info(path: &Path) -> Option<FileInfo>{
             }
         }
 
-        return Some(FileInfo{
-            name, 
+        return Some(FileInfo {
+            name,
             is_file,
             size,
-            children
+            children,
         });
     }
     None
@@ -70,29 +75,32 @@ fn count_files_and_folders(
 ) {
     if let Ok(entries) = fs::read_dir(path) {
         for entry in entries.flatten() {
-            let sub_path = entry.path();
-            if sub_path.is_file() {
-                //incrementam numarul de fisiere
-                *file_count += 1;
+            if let Some(file_name) = entry.file_name().to_str() {
+                if !file_name.starts_with('.') {//se verifica daca fisierul/folderul e ascuns sau nu
+                    let sub_path = entry.path();
+                    if sub_path.is_file() {
+                        //incrementam numarul de fisiere
+                        *file_count += 1;
 
-                //colectam informatii despre extensii
-                if let Some(ext) = sub_path.extension() {
-                    let ext_str = ext.to_string_lossy().to_lowercase();
-                    let count = extension_count.entry(ext_str).or_insert(0);
-                    *count += 1;
+                        //colectam informatii despre extensii
+                        if let Some(ext) = sub_path.extension() {
+                            let ext_str = ext.to_string_lossy().to_lowercase();
+                            let count = extension_count.entry(ext_str).or_insert(0);
+                            *count += 1;
+                        }
+                    } else if sub_path.is_dir() {
+                        //incrementam numarul de foldere
+                        *folder_count += 1;
+
+                        //apelam recursiv functia pe path ul subfolderelor
+                        count_files_and_folders(
+                            &sub_path,
+                            file_count,
+                            folder_count,
+                            extension_count,
+                        );
+                    }
                 }
-
-            } else if sub_path.is_dir() {
-                //incrementam numarul de foldere
-                *folder_count += 1;
-
-                //apelam recursiv functia pe path ul subfolderelor
-                count_files_and_folders(
-                    &sub_path,
-                    file_count,
-                    folder_count,
-                    extension_count,
-                );
             }
         }
     }
@@ -125,7 +133,6 @@ fn main() {
     let mut file_count = 0;
     let mut folder_count = 0;
     let mut extension_counts: HashMap<String, u32> = HashMap::new();
-    
 
     count_files_and_folders(
         path,
@@ -141,12 +148,12 @@ fn main() {
         file_count,
         folder_count,
         extension_counts,
-        file_info: file_info.unwrap_or_else(|| FileInfo{
+        file_info: file_info.unwrap_or_else(|| FileInfo {
             name: String::new(),
             is_file: false,
             size: None,
             children: None,
-        })
+        }),
     };
 
     //serializam structura in format JSON
