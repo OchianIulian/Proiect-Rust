@@ -17,3 +17,14 @@ Clone this repository to your local machine:
 
 ```bash
 git clone https://github.com/your-username/folder-to-json.git
+```
+## How to run?
+Navigate to folder-to-json folder:
+```
+cd folder-to-json
+```
+Run the application:
+```
+cargo run [path to folder that need to be converted]
+```
+
