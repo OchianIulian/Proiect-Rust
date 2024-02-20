@@ -16,7 +16,7 @@ Make sure you have Rust installed on your system. You can install Rust by follow
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/folder-to-json.git
+git clone https://github.com/OchianIulian/Proiect-Rust.git
 ```
 ## How to run?
 Navigate to folder-to-json folder:
@@ -27,4 +27,6 @@ Run the application:
 ```
 cargo run [path to folder that need to be converted]
 ```
+
+
 
